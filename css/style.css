@@ -1,0 +1,418 @@
+/* Global base (overrides the original inline landing styles where needed) */
+:root{
+  --bg: #05020a;
+  --white: #ffffff;
+  --text: rgba(245,245,255,0.92);
+  --muted: rgba(200,175,230,0.75);
+  --muted-2: rgba(210,170,255,0.55);
+  --line: rgba(180,120,255,0.4);
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.10);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html, body{
+  width: 100%;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--bg);
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legacy */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+}
+
+/* Section 0: locked landing (unlocks on CTA click) */
+html.scroll-locked,
+body.scroll-locked{
+  height: 100%;
+  overflow-y: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+body{
+  font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+}
+
+/* Keep the original canvas, but make it the global starfield layer */
+#shader-canvas{
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+.vignette{
+  z-index: 1;
+}
+
+/* Landing section (Section 0) */
+.hero{
+  z-index: 10;
+}
+
+.scroll-hint{
+  z-index: 10;
+}
+
+/* Dot navigation */
+.dot-nav{
+  display: none;
+  position: fixed;
+  right: 1.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.85rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dot-nav .dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  background: rgba(255,255,255,0.22);
+  transition: transform 250ms var(--ease-out), background 250ms var(--ease-out), box-shadow 250ms var(--ease-out);
+}
+
+.dot-nav .dot:hover{
+  transform: scale(1.1);
+  background: rgba(255,255,255,0.34);
+}
+
+.dot-nav .dot.is-active{
+  background: rgba(210,170,255,0.85);
+  box-shadow: 0 0 0 6px rgba(180,120,255,0.15);
+}
+
+.section-anchor{
+  position: relative;
+  height: 1px;
+}
+
+/* Sections 1-5 */
+.section{
+  position: relative;
+  z-index: 5;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 6rem 1.5rem;
+}
+
+/* Push Section 1 below the fixed landing hero */
+#section-1{
+  margin-top: 100vh;
+}
+
+.section-inner{
+  width: min(1100px, 100%);
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.section-title{
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 8vw, 7rem);
+  letter-spacing: -0.02em;
+  color: var(--white);
+  text-shadow: 0 18px 70px rgba(0,0,0,0.35);
+}
+
+.section-body{
+  max-width: 620px;
+  font-weight: 300;
+  line-height: 1.65;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  color: var(--muted);
+}
+
+.section-footer{
+  font-weight: 300;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  color: rgba(200,175,230,0.55);
+  margin-top: 0.5rem;
+}
+
+/* Section 1 specifics */
+.s1-eyebrow{
+  font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 300;
+  font-size: 0.9rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+.s1-name{
+  display: grid;
+  gap: 0.12em;
+  line-height: 0.94;
+  margin-top: 0.25rem;
+}
+
+.s1-first, .s1-last{
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  font-size: clamp(5.5rem, 16vw, 14rem);
+}
+
+.s1-rule{
+  width: min(640px, 86%);
+  height: 1px;
+  background: var(--line);
+  margin: 0.2rem 0 0.35rem;
+}
+
+.s1-subtitle{
+  max-width: 820px;
+  font-weight: 300;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  line-height: 1.55;
+  color: rgba(200,175,230,0.65);
+}
+
+/* Stack */
+.stack{
+  width: min(980px, 100%);
+  display: grid;
+  gap: 1.4rem;
+  margin-top: 0.25rem;
+}
+
+.stack-group{
+  width: 100%;
+  padding-top: 0.25rem;
+  border-top: 1px solid rgba(180,120,255,0.14);
+}
+
+.stack-label{
+  text-align: left;
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(210,170,255,0.55);
+  margin-bottom: 0.85rem;
+}
+
+.stack-grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.stack-item{
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 0.9rem;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.stack-item i{
+  font-size: 22px;
+  line-height: 1;
+  color: rgba(255,255,255,0.88);
+}
+
+.stack-item span{
+  font-weight: 400;
+  color: rgba(245,245,255,0.88);
+}
+
+.stack-item--text i{
+  display: none;
+}
+
+.stack-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(210,170,255,0.7);
+  box-shadow: 0 0 0 6px rgba(180,120,255,0.12);
+  flex: 0 0 auto;
+}
+
+/* Glass utility + projects */
+.glass{
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.projects-grid{
+  width: min(1100px, 100%);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.project-card{
+  padding: 1.15rem 1.15rem 1.05rem;
+  text-align: left;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.project-top{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.project-title{
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  font-size: 1.25rem;
+}
+
+.project-badge{
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: rgba(210,170,255,0.78);
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(180,120,255,0.22);
+  background: rgba(180,120,255,0.08);
+  white-space: nowrap;
+}
+
+.project-desc{
+  font-weight: 300;
+  color: rgba(200,175,230,0.72);
+  line-height: 1.45;
+}
+
+.tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag{
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: rgba(245,245,255,0.82);
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.12);
+}
+
+.project-link{
+  justify-self: start;
+  margin-top: 0.2rem;
+  text-decoration: none;
+  color: rgba(245,245,255,0.92);
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  transition: transform 250ms var(--ease-out), background 250ms var(--ease-out), border-color 250ms var(--ease-out);
+}
+
+.project-link:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.32);
+}
+
+/* Contact */
+.contact-grid{
+  width: min(1100px, 100%);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.contact-btn{
+  padding: 1.05rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: rgba(245,245,255,0.92);
+  font-weight: 400;
+  transition: transform 250ms var(--ease-out), background 250ms var(--ease-out), border-color 250ms var(--ease-out);
+}
+
+.contact-btn:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.22);
+}
+
+.contact-btn.is-static{
+  cursor: default;
+}
+
+.contact-btn.is-static:hover{
+  transform: none;
+}
+
+.contact-emoji{
+  font-size: 1.05rem;
+}
+
+/* Responsive */
+@media (max-width: 900px){
+  .stack-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .projects-grid{
+    grid-template-columns: 1fr;
+  }
+  .contact-grid{
+    grid-template-columns: 1fr;
+  }
+  .dot-nav{
+    right: 0.9rem;
+  }
+}
+
+@media (max-width: 520px){
+  .dot-nav{
+    display: none;
+  }
+  .section{
+    padding: 5.5rem 1.1rem;
+  }
+}
+
